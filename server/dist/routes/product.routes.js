@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_async_handler_1 = __importDefault(require("express-async-handler"));
+const productController_1 = require("../controllers/productController");
+const authMiddleware_1 = require("../middlewares/authMiddleware");
+const router = (0, express_1.Router)();
+router.post('/create', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.createProduct));
+router.post('/create-many', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.createManyProducts));
+router.get('/all', (0, express_async_handler_1.default)(productController_1.getProducts));
+router.get('/wishlist', (0, express_async_handler_1.default)(productController_1.getWishlistProducts));
+router.get('/cart', (0, express_async_handler_1.default)(productController_1.getCartProducts));
+router.get('/:id', (0, express_async_handler_1.default)(productController_1.getProductById));
+router.delete('/:id', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.deleteProduct));
+router.patch('/:id', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.updateProduct));
+router.post('/add-to-cart', authMiddleware_1.verifyUser, (0, express_async_handler_1.default)(productController_1.addToCart));
+router.delete('/remove-cart-item/:productId', authMiddleware_1.verifyUser, (0, express_async_handler_1.default)(productController_1.removeFromCart));
+router.patch('/toogle-wishlist/:productId', authMiddleware_1.verifyUser, (0, express_async_handler_1.default)(productController_1.toogleWishlist));
+exports.default = router;

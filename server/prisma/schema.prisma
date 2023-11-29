@@ -1,0 +1,196 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum ProfileStatus {
+  completed
+  pending
+}
+
+enum Role {
+  customer
+  admin
+  agent
+}
+
+model User {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  email            String        @unique
+  name             String
+  role             Role          @default(customer)
+  profileImage     String?
+  mobile           String?
+  whatsapp         String?
+  profileStatus    ProfileStatus @default(pending) @map("profile_status")
+  currentAddressId String?       @db.ObjectId
+  addresses        Address[]
+  wishlist         Wishlist[]
+  orders           Order[]       @relation("customer")
+  cart             Cart[]
+  assigns          Assign[]
+
+  // timestamps
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  Complaint Complaint[]
+  Feedback  Feedback[]
+
+  @@map("users")
+}
+
+model Address {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  address1 String
+  address2 String?
+  city     String
+  landmark String?
+  pincode  Int
+  state    String  @default("Andhra Pradesh")
+  country  String  @default("India")
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String  @map("user_id") @db.ObjectId
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Order     Order[]
+
+  @@map("address")
+}
+
+model Product {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  category    String
+  prices      Json[]
+  description String?
+  inStock     Boolean    @default(true)
+  thumbnail   String
+  images      String[]
+  videos      String[]
+  ordersCount Int        @default(0) @map("orders_count")
+  reviews     Json[]
+  wishlist    Wishlist[]
+  cart        Cart[]
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model Wishlist {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @map("user_id") @db.ObjectId
+  user      User    @relation(fields: [userId], references: [id])
+  productId String  @map("product_id") @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId], name: "wishlistId")
+  @@map("wishlists")
+}
+
+model Cart {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int
+  units     String
+  price     Float
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @map("user_id") @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @map("product_id") @db.ObjectId
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, productId], name: "cartId")
+  @@map("cart")
+}
+
+enum OrderStatus {
+  created
+  processing
+  packed
+  out_for_delivery
+  delivered
+  cancelled
+  rejected
+}
+
+model Order {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  totalPrice Int         @map("total_price")
+  status     OrderStatus @default(created)
+  code       Int?
+  items      Json[]
+  address    Address     @relation(fields: [addressId], references: [id])
+  addressId  String      @db.ObjectId
+  user       User        @relation("customer", fields: [userId], references: [id])
+  userId     String      @map("user_id") @db.ObjectId
+  assign     Assign?
+  complaint  Complaint?
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model Assign {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  order       Order   @relation(fields: [orderId], references: [id])
+  orderId     String  @unique @db.ObjectId
+  agent       User    @relation(fields: [agentId], references: [id])
+  agentId     String  @unique @db.ObjectId
+  isCompleted Boolean @default(false)
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("assigns")
+}
+
+enum ComplaintStatus {
+  pending
+  resolved
+}
+
+model Complaint {
+  id      String          @id @default(auto()) @map("_id") @db.ObjectId
+  order   Order?          @relation(fields: [orderId], references: [id])
+  orderId String?         @unique @db.ObjectId
+  user    User            @relation(fields: [userId], references: [id])
+  userId  String          @db.ObjectId
+  message String
+  isRead  Boolean         @default(false)
+  status  ComplaintStatus @default(pending)
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("complaints")
+}
+
+model Feedback {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String @db.ObjectId
+  user    User   @relation(fields: [userId], references: [id])
+  message String
+
+  // timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("feedbacks")
+}

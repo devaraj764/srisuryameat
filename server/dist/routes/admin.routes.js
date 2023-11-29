@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_async_handler_1 = __importDefault(require("express-async-handler"));
+const adminControllers_1 = require("../controllers/adminControllers");
+const productController_1 = require("../controllers/productController");
+const router = (0, express_1.Router)();
+router.get('/get-all-users', (0, express_async_handler_1.default)(adminControllers_1.getAllUsers));
+router.get('/get-agents', (0, express_async_handler_1.default)(adminControllers_1.getAgents));
+router.post('/assign-agent', (0, express_async_handler_1.default)(adminControllers_1.assignOrder));
+router.patch('/update-user/:userId', (0, express_async_handler_1.default)(adminControllers_1.updateUser));
+router.post('/products/create', (0, express_async_handler_1.default)(productController_1.createProduct));
+router.post('/products/create-many', (0, express_async_handler_1.default)(productController_1.createManyProducts));
+router.patch('/order/change-status', (0, express_async_handler_1.default)(adminControllers_1.changeStatus));
+router.get('/get-complaints', (0, express_async_handler_1.default)(adminControllers_1.getComplaints));
+router.get('/get-feedbacks', (0, express_async_handler_1.default)(adminControllers_1.getFeedbacks));
+exports.default = router;
