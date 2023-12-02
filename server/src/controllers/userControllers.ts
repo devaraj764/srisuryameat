@@ -27,10 +27,10 @@ export const autheticateUser = async (req: Request, res: Response, next: NextFun
         if (user) {
             const token = createToken({ id: user.id }, '30d');
             res.cookie('token', token, {
-                httpOnly: true,
-                sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
-                secure: process.env.NODE_ENV === 'production'
-
+                // httpOnly: true,
+                // domain: '',
+                // sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
+                // secure: process.env.NODE_ENV === 'production'
             }).send({ user, message: 'Successfully authenticated user', token });
             // res.send({ user, message: 'Successfully authenticated user', token });
         } else {

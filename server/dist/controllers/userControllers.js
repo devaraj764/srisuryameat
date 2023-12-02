@@ -38,9 +38,10 @@ const autheticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         if (user) {
             const token = (0, jwt_1.createToken)({ id: user.id }, '30d');
             res.cookie('token', token, {
-                httpOnly: true,
-                sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
-                secure: process.env.NODE_ENV === 'production'
+            // httpOnly: true,
+            // domain: '',
+            // sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
+            // secure: process.env.NODE_ENV === 'production'
             }).send({ user, message: 'Successfully authenticated user', token });
             // res.send({ user, message: 'Successfully authenticated user', token });
         }
