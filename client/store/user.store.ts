@@ -5,7 +5,6 @@ import { googleLogout } from '@react-oauth/google';
 
 type UserStore = {
     user: UserT | null
-    token: string | null
     signIn: (data: AuthUserT) => Promise<UserT> | null
     signOut: () => void
     setUserData: () => void,
@@ -22,13 +21,13 @@ type UserStore = {
 
 const userStore = create<UserStore>((set, get) => ({
     user: null,
-    token: null,
     signIn: async (data: AuthUserT) => {
         const res = await authenticateUser(data);
         if (!res) return null;
-        const { user } = res;
+        const { user, token } = res;
         if (user)
             set(() => ({ user }))
+        localStorage.setItem('token', token)
         return user
     },
     signOut: async () => {

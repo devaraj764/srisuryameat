@@ -40,7 +40,7 @@ const autheticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                 httpOnly: true,
                 sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
                 secure: process.env.NODE_ENV === 'production'
-            }).send({ user, message: 'Successfully authenticated user', authToken: token });
+            }).send({ user, message: 'Successfully authenticated user', token });
         }
         else {
             res.status(400).send({ message: 'Error authenticating user' });
