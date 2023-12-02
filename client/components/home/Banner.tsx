@@ -18,7 +18,7 @@ const Banner = (props: Props) => {
                         <h1 className="font-bold text-7xl text-white">Leading <span className='text-primary'>Firm</span></h1>
                         <h4 className='text-sm md:text-md text-gray-500 max-w-xl mb-10 mt-5'>From farm to fork, we bring you the finest meats, handpicked for perfection. Satisfy your cravings with our succulent cuts, where quality meets taste in every bite.</h4>
                         <div className='flex items-center gap-7 my-5'>
-                            <Link href={`tel:+91${7013240218}`} className='bg-blue-500 w-fit px-5 py-2 flex items-center gap-2'>
+                            <Link href={`tel:+91${8341535915}`} className='bg-blue-500 w-fit px-5 py-2 flex items-center gap-2'>
                                 <HiPhone size='24' /> Call
                             </Link>
                             <Link href='/products' className='bg-primary w-fit px-5 py-2 flex items-center gap-2'>
@@ -27,13 +27,13 @@ const Banner = (props: Props) => {
                         </div>
                         <div className="flex items-center gap-5">
                             <h5 className='text-gray-300'>Follow us on:</h5>
-                            <Link href='/' target='_blank'>
+                            <Link href='https://www.facebook.com/profile.php?id=61553844852145' target='_blank'>
                                 <FaFacebook size='24' />
                             </Link>
-                            <Link href='/' target='_blank'>
+                            <Link href='https://instagram.com/srisurya_meathub' target='_blank'>
                                 <FaInstagram size='24' />
                             </Link>
-                            <Link href='/' target='_blank'>
+                            <Link href='https://wa.me/918341535915' target='_blank'>
                                 <FaWhatsapp size='24' />
                             </Link>
                         </div>

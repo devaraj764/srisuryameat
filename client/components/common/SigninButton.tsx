@@ -35,6 +35,7 @@ function SigninCard({ className }: Props) {
                 headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
             });
             const userInfo = await res.data;
+            console.log(userInfo)
             await signIn({
                 name: userInfo.name,
                 email: userInfo.email,
@@ -73,7 +74,9 @@ export default function SigninButton({ className }: Props) {
 
     if (!mounted) return <Button className={'duration-200 hover:scale-105' + ' ' + className} variant={'outline'}><Spinner /></Button>;
     return (
-        <GoogleOAuthProvider clientId={'100798026341-mo13lehidlcba8o9rronsqcd6r43h5np.apps.googleusercontent.com'}>
+        <GoogleOAuthProvider clientId={'100798026341-mo13lehidlcba8o9rronsqcd6r43h5np.apps.googleusercontent.com'}
+        
+        >
             <SigninCard className={className} />
         </GoogleOAuthProvider>
     )
