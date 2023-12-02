@@ -1,3 +1,5 @@
+import { config } from 'dotenv'
+config();
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { createToken } from "../helpers/jwt";
@@ -23,7 +25,12 @@ export const autheticateUser = async (req: Request, res: Response, next: NextFun
         })
         if (user) {
             const token = createToken({ id: user.id }, '30d');
-            res.cookie('token', token, { httpOnly: true }).send({ user, message: 'Successfully authenticated user', authToken: token });
+            res.cookie('token', token, {
+                httpOnly: true,
+                sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
+                secure: process.env.NODE_ENV === 'production'
+
+            }).send({ user, message: 'Successfully authenticated user', authToken: token });
         } else {
             res.status(400).send({ message: 'Error authenticating user' })
         }

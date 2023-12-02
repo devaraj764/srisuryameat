@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cancelOrder = exports.sendFeedback = exports.createComplaint = exports.getAllAddresses = exports.addAddress = exports.updateUserDetails = exports.getUserData = exports.logout = exports.autheticateUser = void 0;
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const prisma_1 = require("../config/prisma");
 const jwt_1 = require("../helpers/jwt");
 const sendStatusEmails_1 = require("../helpers/sendStatusEmails");
@@ -34,7 +36,11 @@ const autheticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         });
         if (user) {
             const token = (0, jwt_1.createToken)({ id: user.id }, '30d');
-            res.cookie('token', token, { httpOnly: true }).send({ user, message: 'Successfully authenticated user', authToken: token });
+            res.cookie('token', token, {
+                httpOnly: true,
+                sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
+                secure: process.env.NODE_ENV === 'production'
+            }).send({ user, message: 'Successfully authenticated user', authToken: token });
         }
         else {
             res.status(400).send({ message: 'Error authenticating user' });
