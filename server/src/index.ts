@@ -8,12 +8,10 @@ import cors from 'cors'
 
 const app: Express = express();
 
-app.use(cors(
-  {
-    origin: process.env.ORIGIN,
-    credentials: true,
-  }
-));
+app.use(cors({
+  origin: process.env.ORIGIN || '*',
+  credentials: true,
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

@@ -8,8 +8,6 @@ export const headers = {
 
 export const url = backendUrl;
 
-export const bindUrl = (suburl: string) => `${backendUrl}${suburl}`;
-
 const instance = axios.create({
     baseURL: url,
     timeout: 1000,

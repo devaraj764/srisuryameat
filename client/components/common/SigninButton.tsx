@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc'
