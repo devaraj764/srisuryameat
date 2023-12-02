@@ -42,7 +42,6 @@ function SigninCard({ className }: Props) {
                 profileImage: userInfo.picture
             });
             setLoading(false);
-            router.refresh();
         },
     });
 
