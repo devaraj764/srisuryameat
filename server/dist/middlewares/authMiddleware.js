@@ -13,9 +13,8 @@ exports.verifyAgent = exports.verifyAdmin = exports.verifyUser = void 0;
 const jwt_1 = require("../helpers/jwt");
 const prisma_1 = require("../config/prisma");
 const verifyUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
-        const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+        const token = req.cookies.token;
         if (!token)
             return res.status(401).json({ message: 'Authentication failed! Token not found' });
         const decoded = yield (0, jwt_1.verifyToken)(token);
@@ -32,9 +31,8 @@ const verifyUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.verifyUser = verifyUser;
 const verifyAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
     try {
-        const token = (_b = req.headers['authorization']) === null || _b === void 0 ? void 0 : _b.split(' ')[1];
+        const token = req.cookies.token;
         if (!token)
             return res.status(401).json({ message: 'Authentication failed! Token not found' });
         const decoded = yield (0, jwt_1.verifyToken)(token);
@@ -51,9 +49,8 @@ const verifyAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.verifyAdmin = verifyAdmin;
 const verifyAgent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
     try {
-        const token = (_c = req.headers['authorization']) === null || _c === void 0 ? void 0 : _c.split(' ')[1];
+        const token = req.cookies.token;
         if (!token)
             return res.status(401).json({ message: 'Authentication failed! Token not found' });
         const decoded = yield (0, jwt_1.verifyToken)(token);

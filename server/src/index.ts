@@ -10,7 +10,9 @@ const app: Express = express();
 
 app.use(cors({
   origin: process.env.ORIGIN || '*',
-  credentials: true,
+  methods: ['GET', 'PUT', 'POST', "PATCH", "DELETE"],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+  credentials: true
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

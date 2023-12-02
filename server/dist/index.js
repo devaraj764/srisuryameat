@@ -13,7 +13,9 @@ const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: process.env.ORIGIN || '*',
-    credentials: true,
+    methods: ['GET', 'PUT', 'POST', "PATCH", "DELETE"],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+    credentials: true
 }));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
