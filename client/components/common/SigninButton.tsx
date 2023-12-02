@@ -10,6 +10,7 @@ import Spinner from './Spinner';
 import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query';
 import { logoutUser } from '@/api/user.functions';
+import { googleCientId } from '@/lib/config';
 
 type Props = {
     className?: string
@@ -25,7 +26,7 @@ function SigninCard({ className }: Props) {
         enabled: !user ? true : false,
         queryFn: setUserData,
         refetchOnWindowFocus: false,
-        retry: 1
+        retry: 0
     });
 
     const login = useGoogleLogin({
@@ -35,7 +36,6 @@ function SigninCard({ className }: Props) {
                 headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
             });
             const userInfo = await res.data;
-            console.log(userInfo)
             await signIn({
                 name: userInfo.name,
                 email: userInfo.email,
@@ -67,15 +67,8 @@ function SigninCard({ className }: Props) {
 }
 
 export default function SigninButton({ className }: Props) {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) return <Button className={'duration-200 hover:scale-105' + ' ' + className} variant={'outline'}><Spinner /></Button>;
     return (
-        <GoogleOAuthProvider clientId={'100798026341-mo13lehidlcba8o9rronsqcd6r43h5np.apps.googleusercontent.com'}
-        
+        <GoogleOAuthProvider clientId={googleCientId}
         >
             <SigninCard className={className} />
         </GoogleOAuthProvider>
