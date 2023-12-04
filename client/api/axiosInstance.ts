@@ -11,7 +11,6 @@ export const url = backendUrl;
 
 const instance = axios.create({
     baseURL: url,
-    timeout: 1000,
     headers: headers,
     withCredentials: true
 });
