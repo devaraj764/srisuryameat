@@ -5,5 +5,5 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 exports.secretKey = process.env.SECRET_KEY || 'your-secret-key';
 exports.databaseURL = process.env.DB_URL;
-exports.port = process.env.port || 4000;
+exports.port = process.env.PORT || 4000;
 exports.tokenSecret = process.env.TOKEN_SECRET || 'asdfghjkl';
