@@ -11,7 +11,7 @@ const poppins = Poppins({ weight: ['500', '700'], subsets: ['devanagari'] })
 
 export const metadata: Metadata = {
   title: 'Agent Dashboard',
-  description: 'This is the agent dashboard',
+  description: 'From farm to fork, we bring you the finest meats, handpicked for perfection. Satisfy your cravings with our succulent cuts, where quality meets taste in every bite.',
 }
 
 export default function RootLayout({
