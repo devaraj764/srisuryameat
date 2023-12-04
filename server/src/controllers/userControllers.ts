@@ -23,15 +23,29 @@ export const autheticateUser = async (req: Request, res: Response, next: NextFun
                 }
             }
         });
-        console.log(process.env.NODE_ENV)
         if (user) {
             const token = createToken({ id: user.id }, '30d');
-            res.cookie('token', token, {
-                // httpOnly: true,
-                // domain: '',
-                // sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
-                // secure: process.env.NODE_ENV === 'production'
-            }).send({ user, message: 'Successfully authenticated user', token });
+            if (process.env.NODE_ENV === "development") {
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    path: "/",
+                    domain: "localhost",
+                    secure: false,
+                    sameSite: "lax", // "strict" | "lax" | "none" (secure must be true)
+                    maxAge: 3600000 * 24 * 30, // 1 hour
+                });
+            }
+
+            if (process.env.NODE_ENV === "production") {
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    path: "/",
+                    secure: true,
+                    sameSite: "none", // "strict" | "lax" | "none" (secure must be true)
+                    maxAge: 3600000 * 24 * 30, // 30 days
+                });
+            }
+            res.send({ user, message: 'Successfully authenticated user', token });
             // res.send({ user, message: 'Successfully authenticated user', token });
         } else {
             res.status(400).send({ message: 'Error authenticating user' })

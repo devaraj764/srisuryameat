@@ -34,15 +34,28 @@ const autheticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                 }
             }
         });
-        console.log(process.env.NODE_ENV);
         if (user) {
             const token = (0, jwt_1.createToken)({ id: user.id }, '30d');
-            res.cookie('token', token, {
-            // httpOnly: true,
-            // domain: '',
-            // sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
-            // secure: process.env.NODE_ENV === 'production'
-            }).send({ user, message: 'Successfully authenticated user', token });
+            if (process.env.NODE_ENV === "development") {
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    path: "/",
+                    domain: "localhost",
+                    secure: false,
+                    sameSite: "lax",
+                    maxAge: 3600000 * 24 * 30, // 1 hour
+                });
+            }
+            if (process.env.NODE_ENV === "production") {
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    path: "/",
+                    secure: true,
+                    sameSite: "none",
+                    maxAge: 3600000 * 24 * 30, // 30 days
+                });
+            }
+            res.send({ user, message: 'Successfully authenticated user', token });
             // res.send({ user, message: 'Successfully authenticated user', token });
         }
         else {
