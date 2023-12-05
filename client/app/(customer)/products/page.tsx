@@ -11,7 +11,7 @@ type Props = {
 
 async function ProductsPage({ searchParams }: Props) {
     const data = await getProducts(`category=${searchParams.category || 'all'}`);
-
+    
     return (
         <main className='mt-20 md:mt-24 max-w-[1400px] mx-auto  p-3'>
             <div className="flex items-center justify-between mb-5">
@@ -19,7 +19,7 @@ async function ProductsPage({ searchParams }: Props) {
                 <SelectCategory defaultCategory={searchParams?.category} />
             </div>
             {
-                data.products.length ?
+                data?.products?.length ?
                     <div className='grid grid-cols-1 sm:grid-col-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
                         {data.products?.length > 0 && data.products?.map((product: ProductT, index: number) => (
                             <ProductsCard key={index.toString()} product={product} />
@@ -37,6 +37,5 @@ async function ProductsPage({ searchParams }: Props) {
 }
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default ProductsPage;

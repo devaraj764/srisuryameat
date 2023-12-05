@@ -18,7 +18,7 @@ function SelectCategory({ defaultCategory }: Props) {
     const router = useRouter();
 
     const handleCategory = (category: string) => {
-        router.push(`/products?category=${category}`)
+        router.push(`/products?category=${category}`);
     }
     return (
         <Select defaultValue={defaultCategory || 'all'} onValueChange={(val) => handleCategory(val)}>

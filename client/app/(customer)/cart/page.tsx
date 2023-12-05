@@ -37,6 +37,5 @@ async function CartPage({ }: Props) {
 }
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default CartPage

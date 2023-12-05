@@ -3,13 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { addToCart, removeFromCart } from '@/api/product.functions';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import userStore from '@/store/user.store';
 import { FaCheck } from 'react-icons/fa6';
 import { useToast } from '../ui/use-toast';
@@ -47,7 +40,7 @@ function AddToCartButton({ data: product }: Props) {
                 className: 'bg-green-500 text-white'
             })
             setUserData();
-            if (pathname === '/cart') revalidateCartItems();
+            revalidateCartItems();
         },
         onError: (err) => {
             toast({
@@ -66,6 +59,7 @@ function AddToCartButton({ data: product }: Props) {
                 className: 'bg-green-500 text-white'
             });
             setUserData();
+            revalidateCartItems();
         },
         onError: (err) => {
             toast({
@@ -86,9 +80,6 @@ function AddToCartButton({ data: product }: Props) {
         mutate(payload)
     }
 
-    const isSelected = (item: any) => {
-        return selected.price === item.price
-    }
 
     const handleSelectChange = (item: any) => {
         setSelected(item);

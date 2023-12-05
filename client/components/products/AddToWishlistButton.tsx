@@ -7,6 +7,7 @@ import { toogleWishlist } from '@/api/product.functions';
 import userStore from '@/store/user.store';
 import { useToast } from "@/components/ui/use-toast"
 import { Skeleton } from '../ui/skeleton';
+import revalidateWishlist from '@/app/(customer)/wishlist/actions';
 
 type Props = {
     productId: string
@@ -25,6 +26,7 @@ function AddToWishlistButton({ productId }: Props) {
                 className: 'bg-green-500 text-white'
             })
             setUserData();
+            revalidateWishlist();
         },
         onError: (err) => {
             toast({

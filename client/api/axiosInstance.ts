@@ -1,4 +1,3 @@
-"use client";
 import { backendUrl } from "@/lib/config";
 
 import axios from "axios";

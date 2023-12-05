@@ -21,6 +21,7 @@ export const getProducts = async (query?: any) => {
             method: "GET",
             headers: headers,
             cache: 'no-store',
+            next: { tags: ['get-all-products'] }
         });
         return await res.json();
     } catch (error) {
@@ -49,8 +50,8 @@ export const getWishlistProducts = async () => {
         const res = await fetch(`${bu}/products/wishlist`, {
             method: "GET",
             headers: headers,
-            cache: 'no-store',
             credentials: 'include',
+            cache: "no-store",
             next: { tags: ['get-wishlist-products'] }
         });
         return await res.json();
