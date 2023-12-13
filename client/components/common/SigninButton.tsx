@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc'
@@ -8,7 +8,7 @@ import userStore from '@/store/user.store';
 import axios from 'axios';
 import Spinner from './Spinner';
 import { useRouter } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { logoutUser } from '@/api/user.functions';
 import { googleCientId } from '@/lib/config';
 
@@ -22,9 +22,9 @@ function SigninCard({ className }: Props) {
     const router = useRouter();
 
     const { isLoading } = useQuery({
-        queryKey: ['get-user-data'],
-        enabled: !user ? true : false,
+        queryKey: ['get-query-key'],
         queryFn: setUserData,
+        enabled: user ? false : true,
         refetchOnWindowFocus: false,
         retry: 1
     });
@@ -46,18 +46,17 @@ function SigninCard({ className }: Props) {
         },
     });
 
-    const logout = async () => {
-        setLoading(true)
-        signOut();
-        await logoutUser();
-        router.refresh();
-        router.push('/');
-    }
+    const { isPending, mutate: logout } = useMutation({
+        mutationFn: signOut,
+        onSuccess: () => {
+            router.push('/')
+        }
+    })
 
-    if (loading || isLoading) return <Button className={'duration-200 hover:scale-105' + className} variant={'outline'}><Spinner /></Button>
+    if (loading || isPending || isLoading) return <Button className={'duration-200 hover:scale-105' + className} variant={'outline'}><Spinner /></Button>
     else if (user) {
         return (
-            <Button disabled={loading} variant='destructive' className={'duration-200 hover:scale-105' + className} onClick={logout}>
+            <Button disabled={loading} variant='destructive' className={'duration-200 hover:scale-105' + className} onClick={() => logout()}>
                 <AiOutlineLogout size='22' /> &nbsp; Logout
             </Button>
         )

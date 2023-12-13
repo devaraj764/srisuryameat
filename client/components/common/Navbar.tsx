@@ -28,7 +28,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MdArrowDropDown } from 'react-icons/md';
 import BrandLogo from '@/app/assets/brand-logo.png'
 import { IoIosArrowDown } from 'react-icons/io';
 
@@ -187,14 +186,19 @@ const Navbar = (props: Props) => {
                     <GiMeat size='24' className='scale-125' />
                     <p className='text-xs'>Products</p>
                 </Link>
-                <Link href='/orders' className="flex flex-col items-center cursor-pointer">
-                    <FaBoxesStacked size='24' />
-                    <p className='text-xs'>Orders</p>
-                </Link>
-                <Link href='/cart' className="flex flex-col items-center cursor-pointer">
-                    <AiOutlineShoppingCart size='24' />
-                    <p className='text-xs'>Cart <span className='text-white px-2 rounded-full bg-primary'>{user?.cart.length}</span></p>
-                </Link>
+                {
+                    user &&
+                    <>
+                        <Link href='/orders' className="flex flex-col items-center cursor-pointer">
+                            <FaBoxesStacked size='24' />
+                            <p className='text-xs'>Orders</p>
+                        </Link>
+                        <Link href='/cart' className="flex flex-col items-center cursor-pointer">
+                            <AiOutlineShoppingCart size='24' />
+                            <p className='text-xs'>Cart <span className='text-white px-2 rounded-full bg-primary'>{user?.cart.length}</span></p>
+                        </Link>
+                    </>
+                }
             </nav>
         </div>
 

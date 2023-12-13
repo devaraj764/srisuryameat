@@ -1,13 +1,13 @@
 'use client';
 import { create } from 'zustand'
-import { authenticateUser, getUserDetails } from '@/api/user.functions'
+import { authenticateUser, getUserDetails, logoutUser } from '@/api/user.functions'
 import { googleLogout } from '@react-oauth/google';
 
 type UserStore = {
     user: UserT | null
     signIn: (data: AuthUserT) => Promise<UserT> | null
-    signOut: () => void
-    setUserData: () => void,
+    signOut: () => Promise<void>
+    setUserData: () => Promise<void>,
     isCarted: (productId: string) => {
         productId: string;
         quantity: number;
@@ -24,21 +24,22 @@ const userStore = create<UserStore>((set, get) => ({
     signIn: async (data: AuthUserT) => {
         const res = await authenticateUser(data);
         if (!res) return null;
-        const { user, token } = res;
+        const { user } = res;
         if (user)
             set(() => ({ user }))
-        localStorage.setItem('token', token)
         return user
     },
     signOut: async () => {
+        await logoutUser();
         googleLogout();
-        localStorage.removeItem('token');
-        set(() => ({ token: null, user: null }));
+        set(() => ({ user: null }));
     },
     setUserData: async () => {
+        const data = await getUserDetails();
+        if(!data) return;
+        console.log(data)
         const { user }: { user: UserT } = await getUserDetails();
-        set(() => ({ user }))
-        return user
+        if(user) set(() => ({ user }))
     },
     updateUserData: async (data: UserT) => {
         set(() => ({ user: data }));

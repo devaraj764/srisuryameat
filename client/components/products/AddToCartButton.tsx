@@ -6,12 +6,11 @@ import { addToCart, removeFromCart } from '@/api/product.functions';
 import userStore from '@/store/user.store';
 import { FaCheck } from 'react-icons/fa6';
 import { useToast } from '../ui/use-toast';
-import { Skeleton } from '../ui/skeleton';
 import { usePathname } from 'next/navigation';
 import revalidateCartItems from '@/app/(customer)/cart/action';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import AddToWishlistButton from './AddToWishlistButton';
-import { MdBlock, MdStop } from 'react-icons/md';
+import { MdBlock } from 'react-icons/md';
 
 type Props = {
     data: ProductT
