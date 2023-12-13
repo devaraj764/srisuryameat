@@ -147,7 +147,7 @@ function AddOrUpdateProduct({ product, children }: { product?: ProductT, childre
                             name="category"
                             control={control}
                             render={({ field }) => (
-                                <select className='w-full border px-5 bg-white rounded-md py-2 mt-1' defaultValue={'select'} {...field}>
+                                <select className='w-full border px-5 bg-white rounded-md py-2 mt-1' {...field}>
                                     <option value='select' disabled>--select--</option>
                                     {categories.map((category, index) => (
                                         <option key={index} value={category.variable} >{category.tag}</option>

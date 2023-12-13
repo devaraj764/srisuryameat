@@ -146,8 +146,8 @@ export function ViewOrderDetailsDialog({ order }: { order: OrderT }) {
                 ))}
                 <h5 className='text-md text-gray-400'>User Info</h5>
                 <div className='border p-2 rounded-md'>
-                    <p className='text-sm text-gray-600'>Name: {order.user?.name}</p>
-                    <p className='text-sm text-gray-600'>Mobile: {order.user?.mobile}</p>
+                    <p className='text-sm text-gray-600'>Name: {order.contactInfo?.name}</p>
+                    <p className='text-sm text-gray-600'>Mobile: {order.contactInfo?.mobile}</p>
                     <p className='mt-2 text-sm text-gray-800'>Delivery Address:</p>
                     <p className='text-sm text-gray-500'>{order.address.address1} &nbsp; {order.address?.address2}</p>
                     <p className='text-sm text-gray-500'>{order.address.landmark}, {order.address.city}</p>

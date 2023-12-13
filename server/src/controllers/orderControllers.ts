@@ -4,13 +4,13 @@ import { sendOrderHtml } from "../helpers/html_templets";
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.id || '';
-    const { items, totalPrice, addressId } = req.body;
-    if (!items || items.length <= 0 || !totalPrice || !addressId) next({ status: 400, message: 'Invalid payload' })
+    const { items, totalPrice, addressId, contactInfo } = req.body;
+    if (!items || items.length <= 0 || !totalPrice || !addressId || !contactInfo) next({ status: 400, message: 'Invalid payload' })
     try {
         const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true } })
         if (!user) return next({ status: 404, message: "User Not Found" })
         const result = await prisma.order.create({
-            data: { totalPrice, items, addressId, userId }
+            data: { totalPrice, items, addressId, userId, contactInfo }
         });
         if (result) {
             await prisma.cart.deleteMany({ where: { userId } });
@@ -128,12 +128,11 @@ export const getActiveOrders = async (req: Request, res: Response, next: NextFun
                 createdAt: true,
                 items: true,
                 totalPrice: true,
+                contactInfo: true,
                 user: {
                     select: {
                         id: true,
-                        name: true,
                         email: true,
-                        mobile: true,
                     }
                 },
                 assign: {
@@ -151,7 +150,20 @@ export const getActiveOrders = async (req: Request, res: Response, next: NextFun
             }
         });
         if (result) {
-            res.send({ message: 'Yours Orders', orders: result })
+            const resultCount = await prisma.$transaction([
+                prisma.order.count({ where: { status: 'created' } }),
+                prisma.order.count({ where: { status: 'packed' } }),
+                prisma.order.count({ where: { status: 'processing' } }),
+                prisma.order.count({ where: { status: 'out_for_delivery' } }),
+            ]);
+            const count = {
+                all: resultCount.reduce((acc, number) => acc + number, 0),
+                created: resultCount[0],
+                packed: resultCount[1],
+                processing: resultCount[2],
+                out_for_delivery: resultCount[3]
+            }
+            res.send({ message: 'Yours Orders', orders: result, count })
         } else {
             next({ status: 400, message: 'Error fetchig orders' })
         }

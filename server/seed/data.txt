@@ -1,0 +1,114 @@
+category: live-fish
+###
+Rohu/seelavathi curry cut with head = 320 160
+Rohu/seelavathi curry cut with head skinless = 380 190
+---
+
+category: fish
+###
+Rohu/seelavathi curry cut with head = 260 140
+Catla/ (Bochu) = 280 150
+Gras carp/ (jadduva) = 280 150
+Gold carp/ (bangarupapa) = 280 150
+Roopchand/ (chanduva) = 200 120
+Tilapia/ Gorsa = 150 100
+Pangus / Jella = 200 120
+Murrel / Koramenu (Skinless 40 extra) = 800 410
+---
+
+category: sea-fish
+###
+Indian macral/ kanagadathalu (curry cut with head) = 350 180
+Tuna / Soora = 300 150
+Travalry / Para = 400 210
+Bombay Duck / Isaka donthulu = 350 180
+Sear / vanjram = 800 410
+King fish / Konam = 1000 500
+White pamprate / Tella chanduva = 1500 780
+black pamprate / Nalla chanduva = 800 410
+Pink peach / Gulivindalu = 400 210
+Sharadime / kavallu = 280 150
+Red snapper / pandugappa = 600 310
+Anchavery / nattalle = 450 250
+Blue crabs = 900 460
+Small crabs = 500 270
+---
+
+category: chicken
+###
+Chicken curry cut skinless = 290 160
+Chicken curry cut with skin = 280 150
+Chicken Biryani cut skinless = 320 170
+Chicken Biryani cut with skin = 310 160
+Chicken Chilly cut skinless = 300 160
+Chicken Chilly cut with skin = 290 150
+Chicken Leg cut skinless = 320 180
+Chicken Leg cut with skin = 320 170
+Chicken Leg whole skinless = 340 180
+Chicken Leg whole with skin = 320 170
+Chicken wings / lollipop skinless = 300 160
+Chicken wings / lollipop with skin = 280 150
+Chicken Liver = 250 140
+Chicken Gizzard = 250 140
+Chicken Liver/Gizzard = 250 140
+Chicken Breast skinless = 310 160
+Chicken Breast with skin = 300 150
+Chicken Boneless skinless = 410 220
+Chicken Boneless with skin = 400 200
+Chicken Boneless keens mins = 410 220
+Chicken Necks = 200 100
+---
+
+category: fish-boneless
+###
+Basa Boneless curry cut = 500 270
+Tuna Boneless curry cut = 400 210
+Pangus Boneless curry cut = 500 270
+Tilapia Boneless /fillets = 400 210
+Sear Boneless = 1400 700
+King fish Boneless = 1800 900
+Appolo Boneless = 550 280
+River salmon Boneless = 500 270
+---
+
+category: prawns
+###
+Fresh water prawns Uncleaned = 430 240
+Fresh water prawns Cleaned = 850 440
+Biryani prawns Cleaned = 900 460
+Frozen prawns = 450 250
+---
+
+category: other-meat
+###
+Country chicken / Natu kodicurry cut = 850 430
+Kamuzu kodi / Quail = 800 410
+kadaknath kodi = 1400 730
+---
+
+category: mutton
+###
+Mutton curry cut = 850 450
+Mutton biryani cut = 850 450
+Mutton boneless = 950 500
+Mutton keema = 950 500
+---
+
+category: combo-pack
+###
+Fresh water prawns uncleaned 500g + chicken curry cut 500g = 410
+Mutton curry cut 500g + chicken dum biryanicut 500g = 600
+Catla curry cut 500g + chicken curry cut 500g = 350
+Live fish rohu curry cut 500g + chicken leg curry cut 500g = 400
+Mutton curry cut 500g / Rooopchand curry cut 500g = 580
+Appolo fish 500g + chicken curry cut 500g = 380
+Pangus curry cut 500g + chicken chilly cut 500g = 330
+Tuna boneless 500g + chicken leg curry cut 500g = 450
+Rohu curry cut 500g + chicken curry cut 500g = 320
+---
+
+category: dry-fish
+###
+Achovey / Nattallu = 600 300
+Dry prawns / Royyalu = 600 300
+Dry sear fish / Endi vanjurum = 1200 600

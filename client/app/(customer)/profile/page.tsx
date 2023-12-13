@@ -6,6 +6,7 @@ import UpdateProfile from '@/components/profile/UpdateProfile';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import userStore from '@/store/user.store';
+import { Separator } from '@radix-ui/react-select';
 import Image from 'next/image';
 import React from 'react'
 
@@ -33,6 +34,8 @@ function ProfilePage({ }: Props) {
                         <UpdateProfile />
                     </section>
                     <section className='border bg-white p-3 rounded shadow'>
+                        <h5>Add Address</h5>
+                        <Separator className='mb-5' />
                         <AddAddress />
                     </section>
                 </div>

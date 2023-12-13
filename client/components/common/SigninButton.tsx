@@ -26,7 +26,7 @@ function SigninCard({ className }: Props) {
         enabled: !user ? true : false,
         queryFn: setUserData,
         refetchOnWindowFocus: false,
-        retry: 0
+        retry: 1
     });
 
     const login = useGoogleLogin({
@@ -50,6 +50,7 @@ function SigninCard({ className }: Props) {
         setLoading(true)
         signOut();
         await logoutUser();
+        router.refresh();
         router.push('/');
     }
 

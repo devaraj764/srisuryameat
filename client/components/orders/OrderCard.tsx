@@ -76,10 +76,10 @@ function OrderCard({ order }: Props) {
       </table>
       <Separator className='my-2' />
       <div className="flex items-center justify-between gap-2">
-        <DetailsDialog items={order.items} address={order.address} complaint={order?.complaint?.message} />
+        <DetailsDialog items={order.items} address={order.address} complaint={order?.complaint?.message} contactInfo={order.contactInfo} />
         {
           (order.status === 'created' || order.status === 'processing') &&
-          <Button disabled={isPending} onClick={() => mutate()} variant={'destructive'} className='w-full'>Calcel</Button>
+          <Button disabled={isPending} onClick={() => mutate()} variant={'destructive'} className='w-full'>Cancel</Button>
         }
         {
           order.code && order.status !== 'delivered' && <p className='text-lg font-bold w-full border rounded p-1 text-center text-gray-600'>CODE: {order.code}</p>
@@ -109,7 +109,7 @@ export function OrderStatusDisplay({ status }: { status: any }) {
   )
 }
 
-export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, complaint?: string }> = ({ items: orderItems, address, complaint }) => {
+export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, complaint?: string, contactInfo: OrderT["contactInfo"] }> = ({ items: orderItems, address, complaint, contactInfo }) => {
   return (
     <Dialog>
       <DialogTrigger className='px-3 py-2 w-full border flex items-center justify-center gap-2 text-sm rounded-md text-gray-700'>
@@ -133,6 +133,10 @@ export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, 
           </div>
         ))}
         <h5 className='text-md text-gray-400'>Delivery Address</h5>
+        <div className="border rounded p-2 text-gray-600 text-sm">
+          <p>Name: {contactInfo.name}</p>
+          <p>Mobile: {contactInfo.mobile}</p>
+        </div>
         <table className='table-auto border px-2'>
           <tbody>
             <tr>

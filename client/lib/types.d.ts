@@ -95,6 +95,10 @@ declare global {
         status: 'created' | 'processing' | 'packed' | 'out_for_delivery' | 'delivered' | 'cancelled' | 'rejected',
         code?: number,
         address: AddressT,
+        contactInfo: {
+            name: string,
+            mobile: string
+        },
         user: UserT,
         agent?: UserT,
         createdAt: Date,
@@ -113,7 +117,8 @@ declare global {
     interface OrderCreateT {
         totalPrice: number,
         items: OrderItem[],
-        addressId: string
+        addressId: string,
+        contactInfo: OrderT["contactInfo"]
     }
 
     interface Assign {

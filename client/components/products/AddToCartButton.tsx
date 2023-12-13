@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation';
 import revalidateCartItems from '@/app/(customer)/cart/action';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import AddToWishlistButton from './AddToWishlistButton';
+import { MdBlock, MdStop } from 'react-icons/md';
 
 type Props = {
     data: ProductT
@@ -26,10 +27,8 @@ function AddToCartButton({ data: product }: Props) {
     const { toast } = useToast();
     const pathname = usePathname();
     const { setUserData, isCarted, user } = userStore();
-    const isInCart = isCarted(product.id);
-    const [selected, setSelected] = useState<SelectedQuantity>(isInCart ?
-        { quantity: isInCart.quantity, units: isInCart.units, price: isInCart.price }
-        : product.prices[0]);
+    const [isInCart, setIsInCart] = useState(isCarted(product.id));
+    const [selected, setSelected] = useState<SelectedQuantity>(product?.prices[0]);
 
     const { mutate, isPending } = useMutation({
         mutationFn: addToCart,
@@ -80,17 +79,26 @@ function AddToCartButton({ data: product }: Props) {
         mutate(payload)
     }
 
-
     const handleSelectChange = (item: any) => {
         setSelected(item);
         if (user && isInCart) handleAddToCart(item)
     }
 
     useEffect(() => {
+        setSelected(product.prices[0])
+    }, [product])
+
+    useEffect(() => {
         if (isInCart) {
             setSelected({ quantity: isInCart.quantity, units: isInCart.units, price: isInCart.price })
         }
     }, [isInCart])
+
+    useEffect(()=>{
+        if(product){
+            setIsInCart(isCarted(product.id))
+        }
+    }, [product])
 
     return (
         <div className="mt-3">
@@ -110,13 +118,15 @@ function AddToCartButton({ data: product }: Props) {
                 !user ? null :
                     <div className='mt-4 flex gap-3'>
                         <AddToWishlistButton productId={product.id} />
-                        {isInCart ?
+                        {!product.inStock ? 
+                                <Button className='bg-gray-300 text-gray-700 w-full cursor-not-allowed' disabled={true}><MdBlock size='24' /> &nbsp; Out of stock</Button>
+                        :  isInCart ?
                             pathname === '/cart' ?
                                 <Button variant={'destructive'} className='w-full' onClick={() => removeMutate(product.id)} disabled={removePending}>Remove</Button>
                                 :
                                 <Button className='bg-green-600 w-full cursor-not-allowed' disabled={true}><FaCheck /> &nbsp; Added to cart</Button>
                             :
-                            <Button variant={'outline'} className='border border-primary text-primary hover:text-primary w-full' onClick={() => handleAddToCart()} disabled={isPending || isInCart}>Add to cart</Button>
+                            <Button variant={'outline'} className='border border-primary text-primary hover:text-primary w-full' onClick={() => handleAddToCart()} disabled={!selected || isPending || isInCart}>Add to cart</Button>
                         }
                     </div>
             }

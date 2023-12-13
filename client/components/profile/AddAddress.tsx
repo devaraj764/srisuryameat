@@ -22,7 +22,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function AddAddress() {
+function AddAddress({ callback }: { callback?: () => void }) {
     const { setUserData } = userStore();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const { toast } = useToast();
@@ -42,7 +42,8 @@ function AddAddress() {
                 className: 'bg-green-500 text-white'
             })
             setUserData();
-            queryClient.invalidateQueries({ queryKey: ["get-all-addresses"] })
+            queryClient.invalidateQueries({ queryKey: ["get-all-addresses"] });
+            if(callback) callback()
         },
         onError: (err) => {
             toast({
@@ -54,12 +55,6 @@ function AddAddress() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex items-center justify-between">
-                <h5 className='text-lg text-gray-900 py-2'>Add Address</h5>
-                <Button disabled={isPending} variant={'link'} type="submit" className="text-blue-500">Submit</Button>
-            </div>
-            <Separator className='mb-5' />
-
             <div className="mb-3">
                 <label className="block text-sm text-gray-700 mb-1">Address 1</label>
                 <Input {...register('address1', { required: true })} className="w-full rounded-md border border-gray-300 p-2" />
@@ -86,9 +81,9 @@ function AddAddress() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
 
-                <div className="mb-3">
+                <div>
                     <label className="block text-sm text-gray-700 mb-1">Pincode</label>
                     <Input type="number" {...register('pincode', { required: true })} className="w-full rounded-md border border-gray-300 p-2" />
                     {errors.pincode && (
@@ -97,18 +92,19 @@ function AddAddress() {
                         </span>
                     )}
                 </div>
-                <div className="mb-3">
+                <div>
                     <label className="block text-sm text-gray-700 mb-1">State</label>
                     <Input readOnly value="Andhra Pradesh" {...register('state', { required: true })} className="w-full rounded-md border border-gray-300 p-2" />
                     {errors.state && <span className='text-red-600 text-xs'>State is required</span>}
                 </div>
 
-                <div className="mb-5">
+                <div>
                     <label className="block text-sm text-gray-700 mb-1">Country</label>
                     <Input readOnly value="India" {...register('country', { required: true })} className="w-full rounded-md border border-gray-300 p-2" />
                     {errors.country && <span className='text-red-600 text-xs'>Country is required</span>}
                 </div>
             </div>
+            <Button disabled={isPending} variant={'link'} type="submit" className="text-blue-500 float-right">Submit</Button>
         </form>
     )
 }

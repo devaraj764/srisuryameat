@@ -37,29 +37,27 @@ function ActiveOrders({ }: Props) {
     });
 
     useEffect(() => {
-        refetch()
+        refetch();
     }, [selected, refetch])
 
     return (
         <div className='my-10'>
-            <div className="flex items-center justify-between">
-                <Select value={selected} onValueChange={(val) => setSelected(val)}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">All</SelectItem>
-                        <SelectItem value="created">New Orders</SelectItem>
-                        <SelectItem value="processing">Proceessing</SelectItem>
-                        <SelectItem value="packed">Packed</SelectItem>
-                        <SelectItem value="out_for_delivery">Out for Delivery</SelectItem>
-                    </SelectContent>
-                </Select>
+            <div className="flex items-center justify-between mb-3">
+                <ScrollArea >
+                    <div className="flex items-center gap-5">
+                        <Button onClick={() => setSelected('all')} variant={'link'} className={`cursor-pointer text-[13px] p-0 ${selected === 'all' ? 'text-blue-500 font-bold' : 'text-gray-500'}`}>All ({data?.count.all}) </Button>
+                        <Button onClick={() => setSelected('created')} variant={'link'} className={`cursor-pointer text-[13px] p-0 ${selected === 'created' ? 'text-blue-500 font-bold' : 'text-gray-500'}`} >New Orders ({data?.count.created})</Button>
+                        <Button onClick={() => setSelected('processing')} variant={'link'} className={`cursor-pointer text-[13px] p-0 ${selected === 'processing' ? 'text-blue-500 font-bold' : 'text-gray-500'}`} >Processing ({data?.count.processing})</Button>
+                        <Button onClick={() => setSelected('packed')} variant={'link'} className={`cursor-pointer text-[13px] p-0 ${selected === 'packed' ? 'text-blue-500 font-bold' : 'text-gray-500'}`} >Packed ({data?.count.packed})</Button>
+                        <Button onClick={() => setSelected('out_for_delivery')} variant={'link'} className={`cursor-pointer text-[13px] p-0 ${selected === 'out_for_delivery' ? 'text-blue-500 font-bold' : 'text-gray-500'}`} >Out For Delivery ({data?.count.out_for_delivery})</Button>
+                    </div>
+                </ScrollArea>
                 <Link href='/admin/orders-list' className='text-sm text-blue-700 flex gap-2 items-center'>
                     View all <IoMdOpen size='18' />
+
                 </Link>
             </div>
-            <ScrollArea className='my-5'>
+            <ScrollArea className='mb-5'>
                 <OrdersGrid orders={data?.orders} isFetching={isFetching} selected={selected} />
                 {/* <OrdersTable orders={data?.orders} isFetching={isFetching} /> */}
                 <ScrollBar orientation='horizontal' />
@@ -195,8 +193,8 @@ export function OrdersGrid({ orders, isFetching, selected }: { orders: OrderT[],
                             <div className="border p-3 rounded-md">
                                 <h5 className='text-md text-gray-700 mb-2'>Delivery Details:</h5>
                                 <div>
-                                    <p className='text-sm text-blue-700'>{order.user?.name},</p>
-                                    <p className='text-sm text-green-700 mb-2'>Ph: {order.user?.mobile},</p>
+                                    <p className='text-sm text-blue-700'>{order.contactInfo?.name},</p>
+                                    <p className='text-sm text-green-700 mb-2'>Ph: {order.contactInfo?.mobile},</p>
                                     <p className='text-sm text-gray-500'>{order.address.address1} &nbsp; {order.address?.address2}</p>
                                     <p className='text-sm text-gray-500'>{order.address.landmark}, {order.address.city}</p>
                                     <p className='text-sm text-gray-500'>{order.address.state}, {order.address.country}</p>
@@ -239,6 +237,7 @@ export function AgentsDialog({ orderIds }: { orderIds: string[] }) {
         queryKey: ['get-agents'],
         queryFn: () => getAgents(10)
     });
+    const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
         mutationFn: assignAgent,
@@ -247,7 +246,8 @@ export function AgentsDialog({ orderIds }: { orderIds: string[] }) {
                 title: "Success",
                 description: data?.message || "Agent assigned successfully",
                 className: 'bg-green-500 text-white'
-            })
+            });
+            queryClient.invalidateQueries({ queryKey: ['get-active-orders'] });
             closeRef.current?.click();
         },
         onError: (err) => {
