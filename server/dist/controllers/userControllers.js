@@ -70,7 +70,13 @@ const autheticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
 exports.autheticateUser = autheticateUser;
 const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.cookie('token', '', { httpOnly: true }).send({ message: 'Logged out' });
+        res.cookie('token', '', {
+            httpOnly: true,
+            path: "/",
+            secure: true,
+            sameSite: "none",
+            maxAge: 3600000 * 24 * 30, // 30 days
+        }).send({ message: 'Logged out' });
     }
     catch (err) {
         console.log(err);

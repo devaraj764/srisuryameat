@@ -47,7 +47,7 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
                     name: {
                         contains: name
                     }
-                }: {})
+                } : {})
             },
             select: {
                 id: true,
@@ -127,7 +127,8 @@ export const getCartProducts = async (req: Request, res: Response, next: NextFun
                         category: true,
                         createdAt: true,
                         updatedAt: true,
-                        ordersCount: true
+                        ordersCount: true,
+                        inStock: true
                     }
                 }
             },
@@ -157,7 +158,8 @@ export const getWishlistProducts = async (req: Request, res: Response, next: Nex
                         category: true,
                         createdAt: true,
                         updatedAt: true,
-                        ordersCount: true
+                        ordersCount: true,
+                        inStock: true
                     }
                 }
             },

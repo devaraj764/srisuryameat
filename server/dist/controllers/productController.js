@@ -149,7 +149,8 @@ const getCartProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                         category: true,
                         createdAt: true,
                         updatedAt: true,
-                        ordersCount: true
+                        ordersCount: true,
+                        inStock: true
                     }
                 }
             },
@@ -180,7 +181,8 @@ const getWishlistProducts = (req, res, next) => __awaiter(void 0, void 0, void 0
                         category: true,
                         createdAt: true,
                         updatedAt: true,
-                        ordersCount: true
+                        ordersCount: true,
+                        inStock: true
                     }
                 }
             },

@@ -58,7 +58,13 @@ export const autheticateUser = async (req: Request, res: Response, next: NextFun
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.cookie('token', '', { httpOnly: true }).send({ message: 'Logged out' });
+        res.cookie('token', '', {
+            httpOnly: true,
+            path: "/",
+            secure: true,
+            sameSite: "none", // "strict" | "lax" | "none" (secure must be true)
+            maxAge: 3600000 * 24 * 30, // 30 days
+        }).send({ message: 'Logged out' });
     } catch (err: any) {
         console.log(err)
         next({ message: err.message })
