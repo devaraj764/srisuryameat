@@ -109,7 +109,7 @@ export function OrderStatusDisplay({ status }: { status: any }) {
   )
 }
 
-export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, complaint?: string, contactInfo: OrderT["contactInfo"] }> = ({ items: orderItems, address, complaint, contactInfo }) => {
+export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, complaint?: string, contactInfo?: OrderT["contactInfo"] }> = ({ items: orderItems, address, complaint, contactInfo }) => {
   return (
     <Dialog>
       <DialogTrigger className='px-3 py-2 w-full border flex items-center justify-center gap-2 text-sm rounded-md text-gray-700'>
@@ -134,8 +134,8 @@ export const DetailsDialog: React.FC<{ items?: OrderItem[], address?: AddressT, 
         ))}
         <h5 className='text-md text-gray-400'>Delivery Address</h5>
         <div className="border rounded p-2 text-gray-600 text-sm">
-          <p>Name: {contactInfo.name}</p>
-          <p>Mobile: {contactInfo.mobile}</p>
+          <p>Name: {contactInfo?.name}</p>
+          <p>Mobile: {contactInfo?.mobile}</p>
         </div>
         <table className='table-auto border px-2'>
           <tbody>

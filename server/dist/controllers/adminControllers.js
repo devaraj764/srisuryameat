@@ -169,7 +169,8 @@ const getComplaints = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                             select: {
                                 updatedAt: true
                             }
-                        }
+                        },
+                        contactInfo: true
                     }
                 }
             },

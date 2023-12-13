@@ -77,13 +77,11 @@ function CheckOutButton({ data }: Props) {
         } else {
             setOkayProceed(true)
         }
-    }, [user, contactInfo.name, contactInfo.mobile]);
 
-    useEffect(()=>{
-        if(user && (contactInfo.name === '' || contactInfo.mobile === '')){
+        if(user && (contactInfo.name === '')){
             setContactInfo({ name: user?.name || '', mobile: user?.mobile?.toString() || '' })
         }
-    }, [user])
+    }, [user, contactInfo.name, contactInfo.mobile]);
 
     const handleContactInfoChange = (val: string, field: 'name' | 'mobile') => {
         setContactInfo(prev => {

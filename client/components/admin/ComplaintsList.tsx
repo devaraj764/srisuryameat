@@ -5,9 +5,6 @@ import React from 'react'
 import { DataTable } from '../common/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { DialogContent, DialogTrigger, Dialog } from '../ui/dialog';
-import { Separator } from '../ui/separator';
-import { MdInfo } from 'react-icons/md';
 import { formatDate } from '@/lib/helpers';
 import { DetailsDialog } from '../orders/OrderCard';
 import Link from 'next/link';
@@ -83,7 +80,7 @@ function ComplaintsTable({ complaints }: { complaints: Complaint[] }) {
             cell: ({ row }) => {
                 const index = row.index;
                 const complaint = complaints[index];
-                return <DetailsDialog address={complaint.order?.address} items={complaint.order?.items} complaint={complaint.message} />
+                return <DetailsDialog address={complaint.order?.address} items={complaint.order?.items} complaint={complaint.message} contactInfo={complaint.order?.contactInfo} />
             },
         },
 

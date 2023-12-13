@@ -152,7 +152,8 @@ export const getComplaints = async (req: Request, res: Response, next: NextFunct
                             select: {
                                 updatedAt: true
                             }
-                        }
+                        },
+                        contactInfo:true
                     }
                 }
             },
