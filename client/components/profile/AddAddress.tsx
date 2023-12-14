@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../ui/input';
-import { Separator } from '../ui/separator';
 import { Button } from '../ui/button';
 import { z } from 'zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addAddress } from '@/api/user.functions';
+import { addAddress, updateAddress } from '@/api/user.functions';
 import { useToast } from '../ui/use-toast';
 import userStore from '@/store/user.store';
+import addressStore from '@/store/address.store';
 
 const schema = z.object({
     address1: z.string(),
@@ -24,26 +24,54 @@ type FormData = z.infer<typeof schema>;
 
 function AddAddress({ callback }: { callback?: () => void }) {
     const { setUserData } = userStore();
+    const { editAddress: address, setEditAddress } = addressStore();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const { toast } = useToast();
     const queryClient = useQueryClient();
 
+    useEffect(() => {
+
+        if (address) {
+            reset(address);
+        } else {
+            resetForm()
+        }
+    }, [address])
+
+    const resetForm = () => {
+        reset({
+            address1: "",
+            address2: "",
+            city: "",
+            landmark: "",
+            // @ts-ignore
+            pincode: ""
+        });
+    }
+
     const onSubmit = (data: FormData) => {
-        mutate({ ...data, pincode: parseInt(`${data.pincode}`) })
-        reset();
+        mutate({ ...data, pincode: parseInt(`${data.pincode}`) });
+
     };
 
     const { mutate, isPending } = useMutation({
-        mutationFn: addAddress,
+        mutationFn: async (data: AddressT) => {
+            if (address) {
+                return await updateAddress(address.id || '', data)
+            } else {
+                return await addAddress(data)
+            }
+        },
         onSuccess: (data) => {
             toast({
                 title: "Success",
                 description: data?.message || "Address added Successfully",
                 className: 'bg-green-500 text-white'
             })
+            if (setEditAddress) setEditAddress(null)
             setUserData();
             queryClient.invalidateQueries({ queryKey: ["get-all-addresses"] });
-            if(callback) callback()
+            if (callback) callback();
         },
         onError: (err) => {
             toast({
@@ -104,7 +132,12 @@ function AddAddress({ callback }: { callback?: () => void }) {
                     {errors.country && <span className='text-red-600 text-xs'>Country is required</span>}
                 </div>
             </div>
-            <Button disabled={isPending} variant={'link'} type="submit" className="text-blue-500 float-right">Submit</Button>
+            <Button disabled={isPending} variant={'link'} type="submit" className="text-blue-500 float-right">
+                {address ? "Update" : "Add"}
+            </Button>
+            <Button onClick={resetForm} variant={'link'} type="button" className="text-gray-500 float-right">
+                Reset
+            </Button>
         </form>
     )
 }

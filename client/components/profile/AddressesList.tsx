@@ -5,9 +5,11 @@ import { Skeleton } from '../ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import AddressCard from './AddressCard';
 import { usePathname } from 'next/navigation';
+import addressStore from '@/store/address.store';
 
 
 function AddressesList() {
+    const { setEditAddress: edit } = addressStore();
     const { data, isLoading } = useQuery(({
         queryKey: ["get-all-addresses"],
         queryFn: getAllAddresses,
@@ -30,9 +32,9 @@ function AddressesList() {
                     </Alert>
 
                     :
-                    <div className={pathname === '/profile' ? "grid grid-cols-1 md:grid-cols-3 gap-3": "flex flex-col gap-3"}>
+                    <div className={pathname === '/profile' ? "grid grid-cols-1 md:grid-cols-3 gap-3" : "flex flex-col gap-3"}>
                         {data.addresses?.map((address: AddressT, index: number) => (
-                            <AddressCard key={index.toString()} address={address} />
+                            <AddressCard edit={edit} key={index.toString()} address={address} />
                         ))}
                     </div>
             }

@@ -46,6 +46,15 @@ export const addAddress = async (data: AddressT) => {
     }
 }
 
+export const updateAddress = async (id: string, data: AddressT) => {
+    try {
+        const res = await axiosInstance.post(`/users/update-address/${id}`, data);
+        return await res.data;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export const getAllAddresses = async () => {
     try {
         const res = await axiosInstance.get(`/users/get-addresses`);

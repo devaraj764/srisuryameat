@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc'
@@ -9,7 +9,6 @@ import axios from 'axios';
 import Spinner from './Spinner';
 import { useRouter } from 'next/navigation'
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { logoutUser } from '@/api/user.functions';
 import { googleCientId } from '@/lib/config';
 
 type Props = {
@@ -22,7 +21,7 @@ function SigninCard({ className }: Props) {
     const router = useRouter();
 
     const { isLoading } = useQuery({
-        queryKey: ['get-query-key'],
+        queryKey: ['get-user-data'],
         queryFn: setUserData,
         enabled: user ? false : true,
         refetchOnWindowFocus: false,

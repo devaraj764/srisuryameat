@@ -5,17 +5,21 @@ import userStore from '@/store/user.store';
 import { useMutation } from '@tanstack/react-query';
 import { updateUserDetails } from '@/api/user.functions';
 import { useToast } from '../ui/use-toast';
+import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
+import { usePathname } from 'next/navigation';
 
 type Props = {
     address: AddressT
+    edit: (data: AddressT) => void
 }
 
-function AddressCard({ address }: Props) {
+function AddressCard({ address, edit }: Props) {
     const { isSelectedAddress, setUserData } = userStore()
     const isSelected = isSelectedAddress(address.id || '');
     const { toast } = useToast()
 
-    const { mutate, isPending } = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateUserDetails,
         onSuccess: () => {
             toast({
@@ -39,12 +43,22 @@ function AddressCard({ address }: Props) {
             mutate(data);
         }
     }
+
+    const pathname = usePathname();
+
     return (
         <div className='bg-white rounded p-3 px-5 border'>
-            <div className="flex items-center gap-2 mb-3">
-                <Checkbox checked={isSelected} id={address.id} className='checked:bg-green-600' onClick={handleChangeAddress} />
-                <label htmlFor={address.id}>{isSelected ? 'Selected' : "Select"}</label>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 ">
+                    <Checkbox checked={isSelected} id={address.id} className='checked:bg-green-600' onClick={handleChangeAddress} />
+                    <label htmlFor={address.id}>{isSelected ? 'Selected' : "Select"}</label>
+                </div>
+                {
+                    pathname === '/profile' &&
+                    <Button onClick={() => edit(address)} variant={'link'} className='p-0'>Edit</Button>
+                }
             </div>
+            <Separator className='mb-2' />
             <p className='text-sm text-gray-700 mb-2'>{address.address1 + " " + address.address2}</p>
             <table className='table-auto'>
                 <tbody>

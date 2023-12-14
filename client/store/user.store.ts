@@ -7,7 +7,7 @@ type UserStore = {
     user: UserT | null
     signIn: (data: AuthUserT) => Promise<UserT> | null
     signOut: () => Promise<void>
-    setUserData: () => Promise<void>,
+    setUserData: () => Promise<UserT | null>,
     isCarted: (productId: string) => {
         productId: string;
         quantity: number;
@@ -36,10 +36,10 @@ const userStore = create<UserStore>((set, get) => ({
     },
     setUserData: async () => {
         const data = await getUserDetails();
-        if(!data) return;
-        console.log(data)
+        if(!data) return null;
         const { user }: { user: UserT } = await getUserDetails();
-        if(user) set(() => ({ user }))
+        if(user) set(() => ({ user }));
+        return user;
     },
     updateUserData: async (data: UserT) => {
         set(() => ({ user: data }));
