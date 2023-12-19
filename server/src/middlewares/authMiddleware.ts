@@ -22,6 +22,7 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
 export const verifyAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token;
+    console.log(token)
     if (!token) return res.status(401).json({ message: 'Authentication failed! Token not found' })
     const decoded = await verifyToken(token);
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });

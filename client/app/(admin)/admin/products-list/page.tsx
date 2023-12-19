@@ -17,7 +17,7 @@ async function ProductsListPage({ searchParams }: Props) {
       <div className="flex items-center justify-between gap-3 mb-5">
         <SearchProduct />
         <AddOrUpdateProduct>
-          <span className='text-blue-500 px-5 py-2 bg-white border rounded-md flex items-center gap-2 text-sm'><AiOutlinePlus /> Add New Product</span>
+          <span className='text-blue-500 px-5 py-2 bg-white border rounded-md flex items-center gap-2 text-sm cursor-pointer'><AiOutlinePlus /> Add New Product</span>
         </AddOrUpdateProduct>
       </div>
       <ProductsListGrid data={data} />

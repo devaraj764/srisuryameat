@@ -15,6 +15,15 @@ export const createOrUpdateProduct = async ({ data, id }: { data: ProductCreateT
     }
 }
 
+export const deleteProduct = async (productId: string) => {
+    try {
+        const res = await axiosInstance.delete(`/admin/products/${productId}`);
+        return await res.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const getProducts = async (query?: any) => {
     try {
         const res = await fetch(`${bu}/products/all?${query ? query : ''}`, {

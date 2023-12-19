@@ -83,7 +83,7 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
 }
 
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
+    const { productid: id } = req.params;
     if (!id) next({ status: 400, message: 'Id is not sent' })
     try {
         const product = await prisma.product.delete({ where: { id } });

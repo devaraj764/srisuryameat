@@ -25,20 +25,23 @@ const userStore = create<UserStore>((set, get) => ({
         const res = await authenticateUser(data);
         if (!res) return null;
         const { user } = res;
-        if (user)
+        if (user) {
             set(() => ({ user }))
+            localStorage.setItem('isLoggedin', 'true')
+        }
         return user
     },
     signOut: async () => {
         await logoutUser();
         googleLogout();
+        localStorage.removeItem('isLoggedin');
         set(() => ({ user: null }));
     },
     setUserData: async () => {
         const data = await getUserDetails();
-        if(!data) return null;
+        if (!data) return null;
         const { user }: { user: UserT } = await getUserDetails();
-        if(user) set(() => ({ user }));
+        if (user) set(() => ({ user }));
         return user;
     },
     updateUserData: async (data: UserT) => {

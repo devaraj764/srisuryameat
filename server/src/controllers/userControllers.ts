@@ -134,6 +134,24 @@ export const addAddress = async (req: Request, res: Response, next: NextFunction
     }
 }
 
+export const updateAddress = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.id || '';
+    const { addressId } = req.params;
+    const { address1, city, pincode, state, country, address2 } = req.body;
+    if (!address1 || !city || !pincode || !state || !country || !addressId) next({ status: 400, message: "Invalid data payload" })
+    try {
+        const address = await prisma.address.update({
+            where: { id: addressId },
+            data: { address1, address2, city, pincode, country }
+        });
+        if (!address) next({ status: 400, message: 'Error updating user' });
+        res.send({ address, message: 'Address updated successfully' })
+    } catch (err: any) {
+        console.log(err)
+        next({ message: err.message })
+    }
+}
+
 export const getAllAddresses = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.id || '';
     try {

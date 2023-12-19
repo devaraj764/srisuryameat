@@ -14,6 +14,7 @@ router.post('/assign-agent', (0, express_async_handler_1.default)(adminControlle
 router.patch('/update-user/:userId', (0, express_async_handler_1.default)(adminControllers_1.updateUser));
 router.post('/products/create', (0, express_async_handler_1.default)(productController_1.createProduct));
 router.post('/products/create-many', (0, express_async_handler_1.default)(productController_1.createManyProducts));
+router.delete('/products/:productid', (0, express_async_handler_1.default)(productController_1.deleteProduct));
 router.patch('/order/change-status', (0, express_async_handler_1.default)(adminControllers_1.changeStatus));
 router.get('/get-complaints', (0, express_async_handler_1.default)(adminControllers_1.getComplaints));
 router.get('/get-feedbacks', (0, express_async_handler_1.default)(adminControllers_1.getFeedbacks));

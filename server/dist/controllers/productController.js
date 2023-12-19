@@ -99,7 +99,7 @@ const getProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getProductById = getProductById;
 const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { productid: id } = req.params;
     if (!id)
         next({ status: 400, message: 'Id is not sent' });
     try {

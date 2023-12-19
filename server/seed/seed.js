@@ -1,4 +1,4 @@
-const data = require('./data.json')
+const data = require('./replicate.json')
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
 const path = require('path');
@@ -29,11 +29,11 @@ const replicateProducts = async () => {
         });
         console.log("products replicated successfully successfully");
         const jsonData = JSON.stringify(result, null, 2);
-        fs.writeFileSync('replicate.json', jsonData);
+        fs.writeFileSync('seed/replicate.json', jsonData);
     } catch (error) {
         console.log(error)
     }
 };
 
-// insertProducts();
-replicateProducts();
+insertProducts();
+// replicateProducts();

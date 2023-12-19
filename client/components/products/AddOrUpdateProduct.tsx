@@ -43,7 +43,7 @@ function AddOrUpdateProduct({ product, children }: { product?: ProductT, childre
         defaultValues: {
             name: product?.name || '',
             description: product?.description || '',
-            category: product?.category || '',
+            category: product?.category || categories[0].variable,
             thumbnail: product?.thumbnail || '',
             prices: product?.prices || []
         }
@@ -89,11 +89,11 @@ function AddOrUpdateProduct({ product, children }: { product?: ProductT, childre
     })
 
     const onSubmit: SubmitHandler<ProductFormData> = (data) => {
-        console.log(data);
         if (product) {
             addOrUpdate({ data, id: product?.id })
         } else {
-            addOrUpdate({ data })
+            if (data.category !== '')
+                addOrUpdate({ data })
         }
         // Perform submission logic here
     };

@@ -1,12 +1,14 @@
 import React from 'react'
-import { getProducts } from '@/api/product.functions';
+import { deleteProduct } from '@/api/product.functions';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
 import AddOrUpdateProduct from '@/components/products/AddOrUpdateProduct';
 import Image from 'next/image';
 import SwitchStock from './SwitchStock';
-
+import { MdDelete } from 'react-icons/md';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
+import { revalidateTag } from 'next/cache';
+import { ProductActions } from './ProductActions';
 
 type Props = {
     data: {
@@ -14,10 +16,10 @@ type Props = {
     }
 }
 
-export default async function ProductsListGrid({ data }: Props) {  
+export default async function ProductsListGrid({ data }: Props) {
     if (data && data.products)
         return (
-            <div className='grid grid-cols-1 sm:grid-col-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
+            <div className='grid grid-cols-1 sm:grid-col-2 md:grid-cols-3 gap-3'>
                 {data.products?.length > 0 && data.products?.map((product: ProductT, index: number) => (
                     <ProductsCard key={index.toString()} product={product} />
                 ))}
@@ -48,17 +50,6 @@ export function ProductsCard({ product }: { product: ProductT }) {
             </ScrollArea>
             <Separator className='my-3' />
             <ProductActions product={product} />
-        </div>
-    )
-}
-
-export function ProductActions({ product }: { product: ProductT }) {
-    return (
-        <div className="flex items-center gap-2">
-            <SwitchStock inStock={product?.inStock} productId={product.id} />
-            <AddOrUpdateProduct product={product}>
-                <span className='bg-blue-500 hover:bg-blue-700 text-white py-2 w-fit px-7 text-center rounded-md cursor-pointer'>Edit</span>
-            </AddOrUpdateProduct>
         </div>
     )
 }

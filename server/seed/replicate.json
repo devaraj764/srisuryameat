@@ -15,6 +15,11 @@
         "quantity": 500,
         "units": "g",
         "price": 160
+      },
+      {
+        "quantity": 2,
+        "units": "kg",
+        "price": 640
       }
     ]
   },
@@ -535,7 +540,7 @@
     "name": "Chicken Chilly cut skinless",
     "category": "chicken",
     "thumbnail": "https://needline.in/wp-content/uploads/2020/11/chillicut-min.jpg",
-    "inStock": true,
+    "inStock": false,
     "description": "",
     "prices": [
       {
@@ -554,7 +559,7 @@
     "name": "Chicken Chilly cut with skin",
     "category": "chicken",
     "thumbnail": "https://cdn.dotpe.in/longtail/store-items/5462833/VSyIN2cT.jpeg",
-    "inStock": true,
+    "inStock": false,
     "description": "",
     "prices": [
       {
@@ -801,7 +806,7 @@
     "name": "Chicken Boneless with skin",
     "category": "chicken",
     "thumbnail": "https://porterandyork.com/wp-content/uploads/2013/10/PY_featured_ck_skin_breast.jpg",
-    "inStock": true,
+    "inStock": false,
     "description": "",
     "prices": [
       {
@@ -1395,6 +1400,25 @@
         "quantity": 500,
         "units": "g",
         "price": 600
+      }
+    ]
+  },
+  {
+    "name": "Chicken-Whole",
+    "category": "",
+    "thumbnail": "https://ifoodreal.com/wp-content/uploads/2023/08/how-to-cut-up-a-whole-chicken-1017x1536.jpg",
+    "inStock": true,
+    "description": "Full chicken cleaned",
+    "prices": [
+      {
+        "quantity": 320,
+        "units": "kg",
+        "price": 1
+      },
+      {
+        "quantity": 320,
+        "units": "kg",
+        "price": 1
       }
     ]
   }

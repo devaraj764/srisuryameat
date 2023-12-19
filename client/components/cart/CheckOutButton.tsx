@@ -12,7 +12,7 @@ import userStore from '@/store/user.store';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import AddAddress from '../profile/AddAddress';
-import { MdAdd, MdClose } from 'react-icons/md';
+import { MdAdd } from 'react-icons/md';
 import { Input } from '../ui/input';
 
 type Props = {

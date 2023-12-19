@@ -33,6 +33,7 @@ exports.verifyUser = verifyUser;
 const verifyAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.cookies.token;
+        console.log(token);
         if (!token)
             return res.status(401).json({ message: 'Authentication failed! Token not found' });
         const decoded = yield (0, jwt_1.verifyToken)(token);

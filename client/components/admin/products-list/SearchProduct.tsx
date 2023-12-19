@@ -2,17 +2,20 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
-import React, { FormEventHandler, useState } from 'react'
+import React, {  useState } from 'react'
 
-type Props = {}
+type Props = {
+    url?: string
+}
 
-function SearchProduct({ }: Props) {
+function SearchProduct({ url }: Props) {
     const router = useRouter();
     const [value, setValue] = useState('');
 
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(`/admin/products-list?product_name=${value}`);
+        router.push(`${url || '/admin/products-list'}?product_name=${value}`);
     }
 
     return (

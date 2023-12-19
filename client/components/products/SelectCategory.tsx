@@ -22,7 +22,7 @@ function SelectCategory({ defaultCategory }: Props) {
     }
     return (
         <Select defaultValue={defaultCategory || 'all'} onValueChange={(val) => handleCategory(val)}>
-            <SelectTrigger className="w-[180px]" >
+            <SelectTrigger className="md:w-[180px]" >
                 <SelectValue placeholder="select" />
             </SelectTrigger>
             <SelectContent>

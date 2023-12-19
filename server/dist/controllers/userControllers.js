@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cancelOrder = exports.sendFeedback = exports.createComplaint = exports.getAllAddresses = exports.addAddress = exports.updateUserDetails = exports.getUserData = exports.logout = exports.autheticateUser = void 0;
+exports.cancelOrder = exports.sendFeedback = exports.createComplaint = exports.getAllAddresses = exports.updateAddress = exports.addAddress = exports.updateUserDetails = exports.getUserData = exports.logout = exports.autheticateUser = void 0;
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const prisma_1 = require("../config/prisma");
@@ -154,6 +154,27 @@ const addAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.addAddress = addAddress;
+const updateAddress = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.id || '';
+    const { addressId } = req.params;
+    const { address1, city, pincode, state, country, address2 } = req.body;
+    if (!address1 || !city || !pincode || !state || !country || !addressId)
+        next({ status: 400, message: "Invalid data payload" });
+    try {
+        const address = yield prisma_1.prisma.address.update({
+            where: { id: addressId },
+            data: { address1, address2, city, pincode, country }
+        });
+        if (!address)
+            next({ status: 400, message: 'Error updating user' });
+        res.send({ address, message: 'Address updated successfully' });
+    }
+    catch (err) {
+        console.log(err);
+        next({ message: err.message });
+    }
+});
+exports.updateAddress = updateAddress;
 const getAllAddresses = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.id || '';
     try {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc'
@@ -20,13 +20,19 @@ function SigninCard({ className }: Props) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const { isLoading } = useQuery({
-        queryKey: ['get-user-data'],
-        queryFn: setUserData,
-        enabled: user ? false : true,
-        refetchOnWindowFocus: false,
-        retry: 1
-    });
+    useEffect(() => {
+        async function callUserData() {
+            setLoading(true)
+            var value = localStorage.getItem("isLoggedin");
+            if (value)
+                await setUserData();
+            setLoading(false)
+        }
+        if (typeof window !== "undefined") {
+            callUserData();
+        }
+    }, []);
+
 
     const login = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
@@ -52,7 +58,7 @@ function SigninCard({ className }: Props) {
         }
     })
 
-    if (loading || isPending || isLoading) return <Button className={'duration-200 hover:scale-105' + className} variant={'outline'}><Spinner /></Button>
+    if (loading || isPending) return <Button className={'duration-200 hover:scale-105' + className} variant={'outline'}>Wait...</Button>
     else if (user) {
         return (
             <Button disabled={loading} variant='destructive' className={'duration-200 hover:scale-105' + className} onClick={() => logout()}>

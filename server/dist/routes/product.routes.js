@@ -14,7 +14,6 @@ router.get('/all', (0, express_async_handler_1.default)(productController_1.getP
 router.get('/wishlist', (0, express_async_handler_1.default)(productController_1.getWishlistProducts));
 router.get('/cart', (0, express_async_handler_1.default)(productController_1.getCartProducts));
 router.get('/:id', (0, express_async_handler_1.default)(productController_1.getProductById));
-router.delete('/:id', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.deleteProduct));
 router.patch('/:id', authMiddleware_1.verifyAdmin, (0, express_async_handler_1.default)(productController_1.updateProduct));
 router.post('/add-to-cart', authMiddleware_1.verifyUser, (0, express_async_handler_1.default)(productController_1.addToCart));
 router.delete('/remove-cart-item/:productId', authMiddleware_1.verifyUser, (0, express_async_handler_1.default)(productController_1.removeFromCart));

@@ -10,6 +10,7 @@ const router = (0, express_1.Router)();
 router.get('/get-my-data', (0, express_async_handler_1.default)(userControllers_1.getUserData));
 router.patch('/update-profile', (0, express_async_handler_1.default)(userControllers_1.updateUserDetails));
 router.post('/add-address', (0, express_async_handler_1.default)(userControllers_1.addAddress));
+router.post('/update-address/:addressId', (0, express_async_handler_1.default)(userControllers_1.updateAddress));
 router.get('/get-addresses', (0, express_async_handler_1.default)(userControllers_1.getAllAddresses));
 router.post('/create-complaint', (0, express_async_handler_1.default)(userControllers_1.createComplaint));
 router.post('/send-feedback', (0, express_async_handler_1.default)(userControllers_1.sendFeedback));
